@@ -1,0 +1,124 @@
+
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% load custom_tags %}
+
+{% block Bulletin_Board %}
+    Bulletin Board
+{% endblock Bulletin_Board %}
+
+{% block MMORPG %}
+    "MMORPG" fan zone welcomes you!
+{% endblock MMORPG %}
+
+{% block search_adverts_list_title %}
+    Adverts search
+{% endblock search_adverts_list_title %}
+
+{% block search_background %}
+    {% static 'assets/img/background.jpg' %}
+{% endblock search_background %}
+
+{% block search_title_adverts_list %}
+    Bulletin Board
+{% endblock search_title_adverts_list %}
+
+{% block search_welcome %}
+    "MMORPG" fan zone welcomes you!
+{% endblock search_welcome %}
+
+{% block search_adverts_list_content %}
+    {% if adverts %}
+        {% for advert in adverts %}
+            <div class="post-preview">
+                <a href="{% url 'advert_detail' advert.id %}">
+                    <h2 class="post-title">{{ advert.title.title }}</h2>
+                    <h3 class="post-subtitle">{{ advert.text.title|truncatechars:124 }}</h3>
+                </a>
+                <p class="post-meta">
+                    Posted by
+                    <a href="#!">"{{ advert.author }}"</a>
+                    on {{ advert.createTime }}
+                    <!-- edit time-->
+                    {% if advert.editTime is not None %}
+                        (corrected: {{ advert.editTime }})
+                    {% endif %}
+                </p>
+            </div>
+            <!-- Divider -->
+            <hr class="my-4" />
+        {% endfor %}
+    {% else %}
+        <h2 class="post-title">No adverts</h2>
+    {% endif %}
+{% endblock search_adverts_list_content %}
+
+{% block search_adverts_list_pagination %}
+{# Добавляем пагинацию на страницу #}
+<div class="small text-center text-muted fst-italic">
+    {# Добавляем "<" #}
+    {% if page_obj.has_previous %}
+        <a href="?{% url_replace page=page_obj.previous_page_number %}"><</a>
+    {% endif %}
+
+    {# Информация о предыдущих страницах #}
+    {% if page_obj.has_previous %}
+        <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+    {% endif %}
+
+    {# Информация о текущей странице #}
+    {{ page_obj.number }}
+
+    {# Информация о следующих страницах #}
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+    {% endif %}
+
+    {# Добавляем ">" #}
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">></a>
+    {% endif %}
+</div>
+{% endblock search_adverts_list_pagination %}
+
+{% block search %}
+<!-- Divider -->
+<hr class="my-4" />
+<form action="" method="get">
+<table style="width: 1300">
+    {{ filterset.form.non_field_errors }}
+    {{ filterset.form.name__icontains.errors }}
+    <tr>
+        <td>Title:</td>
+        <td>Category:</td>
+        <td>Created:</td>
+    </tr>
+    <tr>
+        <td>{{ filterset.form.title }}</td>
+        <td>{{ filterset.form.category }}</td>
+        <td>{{ filterset.form.createTime }}</td>
+        <td><input type="submit" value="Search" /></td>
+    </tr> 
+</table>
+</form>
+<!-- Divider -->
+<hr>
+<form action="" method="get">
+    {# Button with an empty get-method to clean all filters #}
+    <input type="submit" value="Clean filters" />
+</form>
+<caption><em>found: {{ search_result }}</em></caption>
+{% endblock search %}
+
+
+

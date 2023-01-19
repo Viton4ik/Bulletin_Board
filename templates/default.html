@@ -9,6 +9,7 @@
         <title>
             {% block title_adverts_list %}{% endblock title_adverts_list %}
             {% block title_advert %}{% endblock title_advert %}
+            {% block search_adverts_list_title %}{% endblock search_adverts_list_title %}
         </title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -43,32 +44,47 @@
             <header class="masthead" style="background-image: url(
                 {% block title_background %} {% endblock title_background %}
                 {% block advert_background %} {% endblock advert_background %}
+                {% block search_background %}{% endblock search_background %}
                 )">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1>
+                            <h1> <!-- Bulletin Board-->
                                 {% block main_title_adverts_list %}{% endblock main_title_adverts_list %}
                                 {% block main_title_advert %}{% endblock main_title_advert %}
                                 {% block posted_advert %}{% endblock posted_advert %}
+                                {% block Bulletin_Board %}{% endblock Bulletin_Board %}
                             </h1>
-                            <span class="subheading">{% block title_welcome %}{% endblock title_welcome %}</span>
+                            <span class="subheading"> <!-- "MMORPG" fan zone welcomes you!-->
+                                {% block title_welcome %}{% endblock title_welcome %}
+                                {% block MMORPG %}{% endblock MMORPG %}
+                            </span>
+                            <!-- search field-->
+                            {% block search %}{% endblock search %}
+                            <!-- search url -->
+                            {% block search_link %}{% endblock search_link %}
                         </div>
                     </div>
                 </div>
-            </div>
         </header>
         <!-- Main Content-->
-        <div class="container px-4 px-lg-5">
+        <div class="container px-4 px-lg-5">        
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- Post preview-->
                     {% block adverts_list %}{% endblock adverts_list %}
                     {% block text_advert %}{% endblock text_advert %}
-          
+                    {% block search_adverts_list_content %}{% endblock search_adverts_list_content %}
+
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                    {% block back_to_hide %} <!-- to hide "Back to BulletinBoard" button if main page-->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="/adverts/">Back to BulletinBoard →</a></div>
+                    {% endblock back_to_hide %} <!-- to hide "Back to BulletinBoard" button if main page-->
+
+                <!-- Pagination -->
+                {% block adverts_list_pagination %} {% endblock adverts_list_pagination %}
+                {% block search_adverts_list_pagination %} {% endblock search_adverts_list_pagination %}
                 </div>
             </div>
         </div>
@@ -79,7 +95,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <ul class="list-inline text-center">
                             <li class="list-inline-item">
-                                <a href="#!">
+                                <a href="https://twitter.com">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
@@ -87,7 +103,7 @@
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#!">
+                                <a href="https://facebook.com">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
@@ -95,7 +111,7 @@
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#!">
+                                <a href="https://github.com">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
                                         <i class="fab fa-github fa-stack-1x fa-inverse"></i>
@@ -103,7 +119,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2022</div>
+                        <div class="small text-center text-muted fst-italic">Django sites &copy; Created by <a href="https://t.me/Viton4ik">@Victor</a> </div>
                     </div>
                 </div>
             </div>

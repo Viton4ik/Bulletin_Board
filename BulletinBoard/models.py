@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     text = models.TextField()
 
-    #get a propper view for the admin panel
     def __str__(self):
+        """ return a propper view for the admin panel """
         return f'{self.text}'
 
 
@@ -22,19 +22,22 @@ class Advert(models.Model):
     upload = models.FileField(upload_to='uploads/', null=True, blank=True)
 
     def preview(self):
+        """ preview function - return 124 symbols of the title """
         return f"{self.title[0:123]}..."
-  
+    
     def get_file_name(self):
+        """ return uploaded "filename.exention" string """
         return f"{self.upload.name.split('/')[1]}"
 
     def if_picture(self):
+        """ return True if uploaded file is a picture """
         ext = ['jpg', 'png', 'bmp', 'jpeg', 'gif']
         exention = self.upload.name.split('/')[1].split('.')[1]
         if exention in ext:
             return True
   
-    #get a propper view for the admin panel
     def __str__(self):
+        """ return a propper view for the admin panel """
         return f"{self.title.title()}: {self.text[:20]} ... Created: {self.createTime.strftime('%d/%m/%Y %H:%M:%S')}"
 
 
@@ -45,7 +48,7 @@ class Response(models.Model):
     accepted = models.BooleanField(default=False)
     advert = models.ForeignKey(Advert, on_delete=models.CASCADE)
     
-    #get a propper view for the admin panel
     def __str__(self):
+        """ return a propper view for the admin panel """
         return f"{self.text}: ... Created: {self.createTime}"
 

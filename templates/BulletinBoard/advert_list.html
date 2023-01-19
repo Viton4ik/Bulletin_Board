@@ -23,7 +23,7 @@
     {% if adverts %}
         {% for advert in adverts %}
             <div class="post-preview">
-                <a href="post.html">
+                <a href="{% url 'advert_detail' advert.id %}">
                     <h2 class="post-title">{{ advert.title.title }}</h2>
                     <h3 class="post-subtitle">{{ advert.text.title|truncatechars:124 }}</h3>
                 </a>
@@ -45,19 +45,52 @@
     {% endif %}
 {% endblock adverts_list %}
 
+{% block search_link %}
+    <!-- Divider -->
+    <hr class="my-4" />
+    <div class="post-preview">
+        <a href="{% url 'advert_search' %}">
+            <h2 class="post-title">Detailed Search</h2>
+        </a>
+    </div>
+{% endblock search_link %}
 
-<!-- ? -->
-{% if adverts %}
-    {% for advert in adverts %}
-    <h1>{{ advert.title.title }}</h1>
-    <h3>{{ advert.text.title }}</h3>
-    <h5><a href="{{ advert.upload.url }}"><button class="mt-3 btn-primary" type="button"> open file {{ advert.upload.name }} </button></h5>
-    <h5>{{ advert.upload.url }}</h5>
-    <h5>{{ advert.upload.path }}</h5>
-    <h5>{{ advert.upload.name }}</h5>
-    <h5>{{ advert.get_file_name }}</h5>
-    <hr>
-    {% endfor %}
-{% else %}
-   <h1>No adverts</h1>
-{% endif %}
+{% block adverts_list_pagination %}
+{# Добавляем пагинацию на страницу #}
+<div class="small text-center text-muted fst-italic">
+    {# Добавляем "<" #}
+    {% if page_obj.has_previous %}
+       <a href="?page={{ page_obj.previous_page_number }}"><</a>
+    {% endif %}
+
+    {# Информация о предыдущих страницах #}
+    {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+    {% endif %}
+
+    {# Информация о текущей странице #}
+    {{ page_obj.number }}
+
+    {# Информация о следующих страницах #}
+    {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+    {% endif %}
+
+    {# Добавляем ">" #}
+    {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">></a>
+    {% endif %}
+</div>
+{% endblock adverts_list_pagination %}
+
+<!-- to hide "Back to BulletinBoard" button if main page-->
+{% block back_to_hide %}
+{% endblock back_to_hide %}

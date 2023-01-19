@@ -46,8 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # my app
+    # added apps
     'BulletinBoard',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
