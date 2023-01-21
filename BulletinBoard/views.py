@@ -2,11 +2,17 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView#, UpdateView, DeleteView
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.core.files.storage import FileSystemStorage
 
 from .filters import AdvertFilter
-# from .forms import AdvertForm
+
+from .forms import AdvertForm
 
 from .models import Advert, Category, Response
+
+from django.urls import reverse_lazy
+
 
 # from datetime import datetime
 
@@ -30,6 +36,7 @@ class AdvertList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
+        context['total'] = len(self.filterset.qs)
 
         # to get info in console
         pprint(context)
@@ -45,7 +52,7 @@ class AdvertDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+    
         # check if upload file is a picture
         if self.get_object().upload:
             context['if_picture'] = self.get_object().if_picture()
@@ -53,6 +60,7 @@ class AdvertDetail(DetailView):
 
         # to get info in console
         pprint(context)
+        #TODO: delete
         print(f"self.object:{self.object}")
         print(f"**kwargs:{kwargs}")
         print(f"**self.kwargs:{self.kwargs}")
@@ -81,14 +89,55 @@ class AdvertSearch(ListView):
         return context
 
 
-# class AdvertCreate(CreateView):
-#     form_class = AdvertForm
-#     model = Advert
-#     template_name = 'BulletinBoard/advert_edit.html'
+class AdvertCreate(CreateView):
+    form_class = AdvertForm
+    model = Advert
+    template_name = 'BulletinBoard/advert_edit.html'
+    # success_url = reverse_lazy('advert_list')
 
-#     # переопределяем метод form_valid и устанавливаем поле модели равным 'post'.
-#     # Далее super().form_valid(form) запустит стандартный механизм сохранения, который вызовет form.save(commit=True)
-#     def form_valid(self, form):
-#         contentType = form.save(commit=False)
-#         contentType.contentType = 'news'
-#         return super().form_valid(form)
+    def get_success_url(self):
+        """ 
+        Provides using app/forms.py with redirect if post-form completed
+        """
+        return reverse_lazy('advert_detail', kwargs={'id': self.object.id})
+
+    def form_valid(self, form):
+        contentType = form.save(commit=False)
+        contentType.contentType = 'advert'
+
+        # TODO: activate this and delete author in forms.py in templates
+        author = form.save(commit=False)
+        author.author = User.objects.get(username=self.request.user.username)
+
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['category_list'] = Category.objects.all().values_list('text', flat=True)
+        # context['author'] = self.request.user.username
+        return context
+
+# def advert_create(request):
+#     if request.method == 'POST':
+#         form = AdvertForm(request.POST, request.FILES)
+#         author = form.save(commit=False)
+#         author.author = User.objects.get(username=request.user.username)
+#         if form.is_valid():
+
+#             form.save()
+#             return HttpResponseRedirect('../') 
+#     else:
+#         form = AdvertForm
+
+#     return render(request, 'BulletinBoard/advert_edit.html', {'form':form})
+
+# def create_post(request):
+#     if request.method == 'POST':
+#         form = AdvertForm(request.POST, request.FILES)
+#         files = request.FILES.getlist('file') #field name in model
+#         if form.is_valid():# and file_form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect("/") 
+#     else:
+#         form = AdvertForm
+#     return render(request, 'BulletinBoard/advert_edit.html', {'form':form})

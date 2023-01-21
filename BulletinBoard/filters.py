@@ -1,4 +1,4 @@
-from django_filters import FilterSet, ModelChoiceFilter, CharFilter, DateTimeFilter
+from django_filters import FilterSet, ModelChoiceFilter, CharFilter, DateTimeFilter, ModelMultipleChoiceFilter
 from django.forms import DateTimeInput
 from django.contrib.auth.models import User
 
@@ -19,11 +19,11 @@ class AdvertFilter(FilterSet):
         empty_label='any',
     )
 
-    category = ModelChoiceFilter(
+    category = ModelMultipleChoiceFilter(
         field_name='category',
         queryset=Category.objects.all(),
         label='Category:',
-        empty_label='any',
+        conjoined=False,
     )
 
     """ add time widget """

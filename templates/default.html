@@ -25,15 +25,15 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+                <a class="navbar-brand" href="{% url 'advert_list' %}">Bulletin Board</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'advert_search' %}">Search</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'advert_create' %}">Create advert</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
                     </ul>
@@ -45,6 +45,7 @@
                 {% block title_background %} {% endblock title_background %}
                 {% block advert_background %} {% endblock advert_background %}
                 {% block search_background %}{% endblock search_background %}
+                {% block post_edit_background %}{% endblock post_edit_background %}
                 )">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -59,11 +60,10 @@
                             <span class="subheading"> <!-- "MMORPG" fan zone welcomes you!-->
                                 {% block title_welcome %}{% endblock title_welcome %}
                                 {% block MMORPG %}{% endblock MMORPG %}
+                                {% block post_edit_content_title %}{% endblock post_edit_content_title %}
                             </span>
                             <!-- search field-->
                             {% block search %}{% endblock search %}
-                            <!-- search url -->
-                            {% block search_link %}{% endblock search_link %}
                         </div>
                     </div>
                 </div>
@@ -76,6 +76,7 @@
                     {% block adverts_list %}{% endblock adverts_list %}
                     {% block text_advert %}{% endblock text_advert %}
                     {% block search_adverts_list_content %}{% endblock search_adverts_list_content %}
+                    {% block post_edit_content %}{% endblock post_edit_content %}
 
                     <!-- Pager-->
                     {% block back_to_hide %} <!-- to hide "Back to BulletinBoard" button if main page-->

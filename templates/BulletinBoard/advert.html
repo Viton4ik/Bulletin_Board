@@ -33,14 +33,14 @@
 
 {% block text_advert %}
     <div class="post-preview">
-        <a href="post.html">
-            <h3 class="post-subtitle">{{ advert.text.title }}</h3>
-        </a>
+        <!-- <a href="#"> -->
+            <span class="subheading"><em>{{ advert.text.title }}</em></span>
+        <!-- </a> -->
         {% if advert.upload %}
             {% if if_picture %}
                 <p>Preview: <Image id="" upload src="{{ advert.upload.url }}" width="100%" height="100%"/></p>
             {% else %}
-                Attached file: <a href="{{ advert.upload.url }}">'{{ advert.get_file_name }}'</a>
+                <p>Attached file: <a href="{{ advert.upload.url }}">'{{ advert.get_file_name }}'</a></p>
             {% endif %}
          
         {% endif %}

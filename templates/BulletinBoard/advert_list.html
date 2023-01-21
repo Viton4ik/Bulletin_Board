@@ -17,12 +17,15 @@
 
 {% block title_welcome %}
     "MMORPG" fan zone welcomes you!
+    <hr>
+    <caption><em>Adverts found: {{ total }}</em></caption>
 {% endblock title_welcome %}
 
 {% block adverts_list %}
     {% if adverts %}
         {% for advert in adverts %}
             <div class="post-preview">
+            <h7>Category: <span style="color: rgb(12, 80, 119);"> <em>{{ advert.category }}</em></span></h7>
                 <a href="{% url 'advert_detail' advert.id %}">
                     <h2 class="post-title">{{ advert.title.title }}</h2>
                     <h3 class="post-subtitle">{{ advert.text.title|truncatechars:124 }}</h3>
@@ -44,16 +47,6 @@
         <h2 class="post-title">No adverts</h2>
     {% endif %}
 {% endblock adverts_list %}
-
-{% block search_link %}
-    <!-- Divider -->
-    <hr class="my-4" />
-    <div class="post-preview">
-        <a href="{% url 'advert_search' %}">
-            <h2 class="post-title">Detailed Search</h2>
-        </a>
-    </div>
-{% endblock search_link %}
 
 {% block adverts_list_pagination %}
 {# Добавляем пагинацию на страницу #}

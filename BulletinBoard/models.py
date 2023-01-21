@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
+from django.urls import reverse
 
 class Category(models.Model):
     text = models.TextField()
@@ -39,6 +39,13 @@ class Advert(models.Model):
     def __str__(self):
         """ return a propper view for the admin panel """
         return f"{self.title.title()}: {self.text[:20]} ... Created: {self.createTime.strftime('%d/%m/%Y %H:%M:%S')}"
+
+    # def get_absolute_url(self):
+    #     """ 
+    #     - link to 'advert_detail' in urls.py if using generics 
+    #     - Provides using app/forms.py with redirect if post-form completed
+    #     """
+    #     return reverse('advert_detail', args=[str(self.id)])
 
 
 class Response(models.Model):

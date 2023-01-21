@@ -129,7 +129,9 @@ USE_TZ = True
 
 STATIC_ROOT = 'static/'
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [BASE_DIR / 'templates/static'] 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static/'),
+# ]
 
 # add media
 # MEDIA_ROOT = 'media/'
