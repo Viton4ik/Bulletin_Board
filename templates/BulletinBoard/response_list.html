@@ -1,0 +1,114 @@
+
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% load custom_tags %}
+
+{% block MMORPG %}
+    List of <span style="text-decoration: underline; color: rgb(61, 118, 172);" >{{ user_ }} </span>responses
+{% endblock MMORPG %}
+
+{% block background %}
+    {% static 'assets/img/response.webp' %}
+{% endblock background %}
+
+{% block preview %}
+{% if advert_filter %}
+<!-- {{ advert_filter }} -->
+<p></p>
+{% for advert_keys, advert_values in advert_filter.items %}
+    <div class="post-preview">
+        <a href="{% url 'advert_detail' advert_keys.id %}">
+            <h3 class="post-subtitle"><em>Advert: </em>"{{ advert_keys.title }}"
+            <h6><em>(posted by: {{ advert_keys.author }}")</em></h6></a>
+            <h5><em>Responses:</em> </h5>
+            <p></p>
+            {% for value in advert_values %}
+                <h6 class="post-meta"> - {{ value.text.title }}</h6>
+                <h15 class="post-meta">Created: {{ value.createTime }}</h15>
+                {% if value.accepted %}
+                    <em>Accepted</em> <Image id="" upload src="{% static 'assets/img/accepted.png' %}" width="2%" height="2%"/>
+                {% else %}
+                    <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="2%" height="2%"/>
+                {% endif %}
+                <a href="{% url 'response_delete' value.id %}">
+                <input type="submit" value="Delete" /></a></p>
+            {% endfor %}
+            <p></p>
+    </div>
+    <!-- Divider -->
+    <hr class="my-4" />
+{% endfor %}
+{% else %}
+    <h2 class="post-title">Responses not found</h2>
+{% endif %}
+{% endblock preview %}
+
+{% block search %}
+<!-- Divider -->
+<hr class="my-4" />
+<!-- <form action="" method="get"> -->
+    <form action="" method="get">
+        {% csrf_token %}
+
+    <!-- {{ advert_filter }} -->
+
+    <!-- <form> -->
+        <!-- <label for="{{ advert_filter }}">qwerty:</label> -->
+        <input id="" type="text" name="{{ zzz }}">
+        <!-- <input type="submit" value="Отправить"> -->
+    <!-- </form> -->
+
+    <!-- {{ filterset.form.as_p}} -->
+    <!-- {{ filterset.form.createTime }} -->
+<input type="submit" value="Search" />
+ 
+
+</form>
+<!-- Divider -->
+<hr>
+<form action="" method="get">
+    {# Button with an empty get-method to clean all filters #}
+    <input type="submit" value="Clean filters" />
+</form>
+<caption><em>found: {{ search_result }}</em></caption>
+
+{% endblock search %}
+
+{% block pagination %}
+{# Добавляем пагинацию на страницу #}
+<div class="small text-center text-muted fst-italic">
+    {# Добавляем "<" #}
+    {% if page_obj.has_previous %}
+        <a href="?{% url_replace page=page_obj.previous_page_number %}"><</a>
+    {% endif %}
+
+    {# Информация о предыдущих страницах #}
+    {% if page_obj.has_previous %}
+        <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+    {% endif %}
+
+    {# Информация о текущей странице #}
+    {{ page_obj.number }}
+
+    {# Информация о следующих страницах #}
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+    {% endif %}
+
+    {# Добавляем ">" #}
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">></a>
+    {% endif %}
+</div>
+{% endblock pagination %}
+

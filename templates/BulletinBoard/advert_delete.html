@@ -1,0 +1,16 @@
+
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block background %}
+    {% static 'assets/img/delete.gif' %}
+{% endblock background %}
+
+{% block preview %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Advert "{{ object.title }}" will be totally deleted.</p>
+    <p><input type="submit" value="Delete" /></p>
+</form>
+{% endblock preview %}

@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 from django.urls import reverse
 
+from django import forms
+
 class Category(models.Model):
     text = models.TextField()
 
@@ -31,7 +33,7 @@ class Advert(models.Model):
 
     def if_picture(self):
         """ return True if uploaded file is a picture """
-        ext = ['jpg', 'png', 'bmp', 'jpeg', 'gif']
+        ext = ['jpg', 'png', 'bmp', 'jpeg', 'gif', 'ico', 'webp']
         exention = self.upload.name.split('/')[1].split('.')[1]
         if exention in ext:
             return True
@@ -40,12 +42,12 @@ class Advert(models.Model):
         """ return a propper view for the admin panel """
         return f"{self.title.title()}: {self.text[:20]} ... Created: {self.createTime.strftime('%d/%m/%Y %H:%M:%S')}"
 
-    # def get_absolute_url(self):
-    #     """ 
-    #     - link to 'advert_detail' in urls.py if using generics 
-    #     - Provides using app/forms.py with redirect if post-form completed
-    #     """
-    #     return reverse('advert_detail', args=[str(self.id)])
+    def get_absolute_url(self):
+        """ 
+        - link to 'advert_detail' in urls.py if using generics 
+        - Provides using app/forms.py with redirect if post-form completed without using 'get_success_url'
+        """
+        return reverse('advert_detail', args=[str(self.id)])
 
 
 class Response(models.Model):

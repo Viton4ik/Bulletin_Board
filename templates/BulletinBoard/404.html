@@ -1,0 +1,21 @@
+
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block background %}
+    {% static 'assets/img/404_2.png' %}
+{% endblock background %}
+
+{% block 404 %}
+{% endblock 404 %}
+
+{% block 404_1 %}
+{% endblock 404_1 %}
+
+{% block 404_user_not_found %}
+<div class="post-preview">
+        <a href="#">
+            <h2 class="post-title">{{ anonymous }}</h2>
+        </a>
+{% endblock 404_user_not_found %}

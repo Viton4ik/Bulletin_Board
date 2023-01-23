@@ -13,23 +13,15 @@
     "MMORPG" fan zone welcomes you!
 {% endblock MMORPG %}
 
-{% block search_adverts_list_title %}
+{% block title %}
     Adverts search
-{% endblock search_adverts_list_title %}
+{% endblock title %}
 
-{% block search_background %}
+{% block background %}
     {% static 'assets/img/background.jpg' %}
-{% endblock search_background %}
+{% endblock background %}
 
-{% block search_title_adverts_list %}
-    Bulletin Board
-{% endblock search_title_adverts_list %}
-
-{% block search_welcome %}
-    "MMORPG" fan zone welcomes you!
-{% endblock search_welcome %}
-
-{% block search_adverts_list_content %}
+{% block preview %}
     {% if adverts %}
         {% for advert in adverts %}
             <div class="post-preview">
@@ -54,9 +46,9 @@
     {% else %}
         <h2 class="post-title">No adverts</h2>
     {% endif %}
-{% endblock search_adverts_list_content %}
+{% endblock preview %}
 
-{% block search_adverts_list_pagination %}
+{% block pagination %}
 {# Добавляем пагинацию на страницу #}
 <div class="small text-center text-muted fst-italic">
     {# Добавляем "<" #}
@@ -90,7 +82,7 @@
         <a href="?{% url_replace page=page_obj.next_page_number %}">></a>
     {% endif %}
 </div>
-{% endblock search_adverts_list_pagination %}
+{% endblock pagination %}
 
 {% block search %}
 <!-- Divider -->

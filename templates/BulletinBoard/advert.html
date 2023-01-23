@@ -3,17 +3,17 @@
 
 {% load static %}
 
-{% block advert_background %}
+{% block background %}
     {% static 'assets/img/post-bg.jpg' %}
-{% endblock advert_background %}
+{% endblock background %}
 
-{% block title_advert %}
+{% block title %}
     {{ advert.title.title|truncatechars:20 }}
-{% endblock title_advert %}
+{% endblock title %}
 
-{% block main_title_advert %}
+{% block Bulletin_Board %}
     {{ advert.title.title }}
-{% endblock main_title_advert %}
+{% endblock Bulletin_Board %}
 
 {% block posted_advert %}
     <div class="post-preview">
@@ -31,11 +31,10 @@
     </div> 
 {% endblock posted_advert %}
 
-{% block text_advert %}
+{% block preview %}
     <div class="post-preview">
-        <!-- <a href="#"> -->
             <span class="subheading"><em>{{ advert.text.title }}</em></span>
-        <!-- </a> -->
+            <p></p>
         {% if advert.upload %}
             {% if if_picture %}
                 <p>Preview: <Image id="" upload src="{{ advert.upload.url }}" width="100%" height="100%"/></p>
@@ -45,9 +44,22 @@
          
         {% endif %}
     </div> 
-{% endblock text_advert %}
+{% endblock preview %}
 
-
+{% block edit_advert %}
+{% if request.user.is_authenticated %}
+        {#% if not user_is_author %#} <!--activate it later-->
+            <a class="btn btn-primary text-uppercase" href="">Send response</a>
+            &nbsp; &nbsp;
+        {#% endif %#}
+        {% if user_is_author %}
+        <a class="btn btn-primary text-uppercase" href="./{{ advert.pk }}/delete/">Delete advert</a>
+        &nbsp; &nbsp;
+        <a class="btn btn-primary text-uppercase" href="{% url 'advert_edit' advert.id %}">Edit advert</a>
+        &nbsp; &nbsp;
+    {% endif %}
+{% endif %}
+{% endblock edit_advert %}
 
 <!-- ? ??? -->
 {% if adverts %}

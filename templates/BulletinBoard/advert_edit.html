@@ -3,15 +3,15 @@
 
 {% load static %}
 
-{% block post_edit_background %}
+{% block background %}
     {% static 'assets/img/create-post.jpg' %}
-{% endblock post_edit_background %}
+{% endblock background %}
 
-{% block post_edit_content_title %}
+{% block MMORPG %}
     Create your advert here
-{% endblock post_edit_content_title %}
+{% endblock MMORPG %}
 
-{% block post_edit_content %}
+{% block preview %}
    <form action="" method="post" enctype="multipart/form-data">  <!--IMPORTANT PART: enctype="multipart/form-data". files won't be uploaded without it-->
     {% csrf_token %}
         <tr>       
@@ -26,10 +26,11 @@
         <p><td>Upload file:</td>
         <td>{{ form.upload }}</td></p>
         
+        <!-- TODO: delete -->
         <!-- {{ form.as_p }} -->
         <!-- {{ MEDIA_ROOT }} -->
         <!-- {{ form.media }} -->
 
-        <input type="submit" value="Create" /> 
+        <input type="submit" value="{{ button }}" /> 
    </form>
-{% endblock post_edit_content %}
+{% endblock preview %}

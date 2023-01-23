@@ -1,4 +1,4 @@
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,18 +7,16 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>
-            {% block title_adverts_list %}{% endblock title_adverts_list %}
-            {% block title_advert %}{% endblock title_advert %}
-            {% block search_adverts_list_title %}{% endblock search_adverts_list_title %}
+            {% block title %}{% endblock title %}
         </title>
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/img/ico.png' %}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        {% load static %}
+        
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     </head>
     <body>
@@ -29,38 +27,47 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
+                {% block 404_1 %}
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
+
+                        {% if user.is_anonymous %} 
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" ><em>User: "Unregistered"</em></a></li> &nbsp;
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" ><em>User: "{{ request.user.username }}"</em></a></li> &nbsp;
+                        {% endif %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'advert_search' %}">Search</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'advert_create' %}">Create advert</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
+                        {% if not user.is_anonymous %} 
+                            {% if request.user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'advert_create' %}">Create advert</a></li>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'response_list' %}">Responses</a></li>
+                            {% endif %}
+                        {% endif %}
+                        
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
+                {% endblock 404_1 %}
             </div>
         </nav>
         <!-- Page Header-->
             <header class="masthead" style="background-image: url(
-                {% block title_background %} {% endblock title_background %}
-                {% block advert_background %} {% endblock advert_background %}
-                {% block search_background %}{% endblock search_background %}
-                {% block post_edit_background %}{% endblock post_edit_background %}
+                {% block background %}{% endblock background %}
                 )">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
                             <h1> <!-- Bulletin Board-->
-                                {% block main_title_adverts_list %}{% endblock main_title_adverts_list %}
-                                {% block main_title_advert %}{% endblock main_title_advert %}
-                                {% block posted_advert %}{% endblock posted_advert %}
                                 {% block Bulletin_Board %}{% endblock Bulletin_Board %}
+                                {% block posted_advert %}{% endblock posted_advert %}
+                                {% block 404_user_not_found %}{% endblock 404_user_not_found %}
                             </h1>
+{% block 404 %}
                             <span class="subheading"> <!-- "MMORPG" fan zone welcomes you!-->
-                                {% block title_welcome %}{% endblock title_welcome %}
                                 {% block MMORPG %}{% endblock MMORPG %}
-                                {% block post_edit_content_title %}{% endblock post_edit_content_title %}
+
                             </span>
                             <!-- search field-->
                             {% block search %}{% endblock search %}
@@ -73,19 +80,17 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <!-- Post preview-->
-                    {% block adverts_list %}{% endblock adverts_list %}
-                    {% block text_advert %}{% endblock text_advert %}
-                    {% block search_adverts_list_content %}{% endblock search_adverts_list_content %}
-                    {% block post_edit_content %}{% endblock post_edit_content %}
-
+                    {% block preview %}{% endblock preview %}
                     <!-- Pager-->
                     {% block back_to_hide %} <!-- to hide "Back to BulletinBoard" button if main page-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="/adverts/">Back to BulletinBoard →</a></div>
+                    <div class="d-flex justify-content-end mb-4">
+                        {% block edit_advert %}{% endblock edit_advert %}
+                        <a class="btn btn-primary text-uppercase" href="/adverts/">Back to BulletinBoard →</a>
+                    </div>
                     {% endblock back_to_hide %} <!-- to hide "Back to BulletinBoard" button if main page-->
 
                 <!-- Pagination -->
-                {% block adverts_list_pagination %} {% endblock adverts_list_pagination %}
-                {% block search_adverts_list_pagination %} {% endblock search_adverts_list_pagination %}
+                {% block pagination %} {% endblock pagination %}
                 </div>
             </div>
         </div>
@@ -124,6 +129,8 @@
                     </div>
                 </div>
             </div>
+
+{% endblock 404 %}
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

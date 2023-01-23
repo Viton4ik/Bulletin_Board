@@ -3,25 +3,25 @@
 
 {% load static %}
 
-{% block title_adverts_list %}
+{% block title %}
     Bulletin Board
-{% endblock title_adverts_list %}
+{% endblock title %}
 
-{% block title_background %}
+{% block background %}
     {% static 'assets/img/background.jpg' %}
-{% endblock title_background %}
+{% endblock background %}
 
-{% block main_title_adverts_list %}
+{% block Bulletin_Board %}
     Bulletin Board
-{% endblock main_title_adverts_list %}
+{% endblock Bulletin_Board %}
 
-{% block title_welcome %}
+{% block MMORPG %}
     "MMORPG" fan zone welcomes you!
     <hr>
     <caption><em>Adverts found: {{ total }}</em></caption>
-{% endblock title_welcome %}
+{% endblock MMORPG %}
 
-{% block adverts_list %}
+{% block preview %}
     {% if adverts %}
         {% for advert in adverts %}
             <div class="post-preview">
@@ -46,9 +46,9 @@
     {% else %}
         <h2 class="post-title">No adverts</h2>
     {% endif %}
-{% endblock adverts_list %}
+{% endblock preview %}
 
-{% block adverts_list_pagination %}
+{% block pagination %}
 {# Добавляем пагинацию на страницу #}
 <div class="small text-center text-muted fst-italic">
     {# Добавляем "<" #}
@@ -82,7 +82,7 @@
        <a href="?page={{ page_obj.next_page_number }}">></a>
     {% endif %}
 </div>
-{% endblock adverts_list_pagination %}
+{% endblock pagination %}
 
 <!-- to hide "Back to BulletinBoard" button if main page-->
 {% block back_to_hide %}

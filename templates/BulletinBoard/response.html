@@ -1,0 +1,64 @@
+
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block response_edit_content_title %}
+    Responses list
+{% endblock response_edit_content_title %}
+
+{% block background %}
+    {% static 'assets/img/response.webp' %}
+{% endblock background %}
+
+{% block preview %}
+    <div class="post-preview">
+        <a href="{% url 'advert_detail' response.id %}">
+            <h3 class="post-subtitle">{{ response.advert.title }}</h3>
+        </a>
+
+            <a></a><em>Responses: </em><h3 class="post-subtitle">{{response.pk}} {{ response.text.title }}</h3>
+            <h6 class="post-subtitle"><em>Advert:</em> {{ response.advert.title }}</h6></a>
+        </a>
+            {% if response.accepted %}
+                <em>Accepted</em> <Image id="" upload src="{% static 'assets/img/accepted.png' %}" width="3%" height="3%"/></p>
+            {% else %}
+            <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="3%" height="3%"/></p>
+            {% endif %}
+        <p class="post-meta">
+            <a href="#!">"{{ response.author }}"</a>
+            responsed on {{ response.createTime }}
+        </p>
+    </div>
+    <!-- Divider -->
+    <hr class="my-4" />
+{% endblock preview %}
+
+
+
+<!-- from response list -->
+{% if responses %}
+{#% for response in responses %#}<!--delete this-->
+{% for response in user_responses %}
+    <div class="post-preview">
+        <a>
+            <em>Response: </em><h3 class="post-subtitle">{{ response.text.title }}</h3>
+            <a href="{% url 'advert_detail' response.id %}">
+            <h6 class="post-subtitle"><em>Advert:</em> {{ response.advert.title }}</h6></a>
+        </a>
+            {% if response.accepted %}
+                <em>Accepted</em> <Image id="" upload src="{% static 'assets/img/accepted.png' %}" width="3%" height="3%"/></p>
+            {% else %}
+            <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="3%" height="3%"/></p>
+            {% endif %}
+        <p class="post-meta">
+            <a href="#!">"{{ response.author }}"</a>
+            responsed on {{ response.createTime }}
+        </p>
+    </div>
+    <!-- Divider -->
+    <hr class="my-4" />
+{% endfor %}
+{% else %}
+<h2 class="post-title">No Responses</h2>
+{% endif %}
