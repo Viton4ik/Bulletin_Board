@@ -49,7 +49,7 @@
 {% block edit_advert %}
 {% if request.user.is_authenticated %}
         {#% if not user_is_author %#} <!--activate it later-->
-            <a class="btn btn-primary text-uppercase" href="">Send response</a>
+            <a class="btn btn-primary text-uppercase" href="{% url 'response_create' advert.id %}">Send response</a>
             &nbsp; &nbsp;
         {#% endif %#}
         {% if user_is_author %}

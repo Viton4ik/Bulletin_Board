@@ -1,13 +1,13 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
-from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponseRedirect, Http404
+# from django.core.files.storage import FileSystemStorage
 
-from .filters import AdvertFilter, ResponseFilter
+from .filters import AdvertFilter#, ResponseFilter
 
-from .forms import AdvertForm#, ResponseForm
+from .forms import AdvertForm, ResponseForm
 
 from .models import Advert, Response
 
@@ -83,12 +83,11 @@ class AdvertDetail(DetailView):
         # if user_is_author
         context['user_is_author'] = context['user_'] == context['advert_author']
         
-        #TODO
-        context['response_id'] = Response.objects.filter(author=self.request.user.id).values_list('id', flat=True)
+        # #TODO
+        # context['response_id'] = Response.objects.filter(author=self.request.user.id).values_list('id', flat=True)
 
         pprint(context)
-        print(f"self.object.id:{self.object.id}")
-
+        print(f"**kwargs:{self.kwargs}")
         return context
 
 
@@ -190,20 +189,71 @@ class ResponseList(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        self.filterset = ResponseFilter(self.request.GET, queryset)
-        pprint(self.filterset)  # to get info in console
-        return self.filterset.qs
+        """ get filter: only self.user responses releted to advert"""
+
+        # self.author = get_object_or_404(User, id=self.request.user.id)
+        # queryset = Response.objects.filter(author=self.author).order_by('-createTime')
+
+        # work edition
+        self.author = get_object_or_404(User, id=self.request.user.id)
+        if self.request.GET:
+            try:
+                if self.request.GET['accepted_button'] == "True":
+                    queryset = Response.objects.filter(author=self.author, accepted=True).order_by('-createTime')
+                elif self.request.GET['accepted_button'] == "False":
+                    queryset = Response.objects.filter(author=self.author, accepted=False).order_by('-createTime')
+            except:
+                queryset = Response.objects.filter(author=self.author).order_by('-createTime')
+        else:
+            queryset = Response.objects.filter(author=self.author).order_by('-createTime')
+
+
+        # #TODO
+        # self.advert = get_object_or_404(Advert, author_id=self.request.user.id)
+        # if self.request.GET:
+        #     try:
+        #         if self.request.GET['accepted_button'] == "True":
+        #             queryset = Response.objects.filter(advert=self.advert, accepted=True).order_by('-createTime')
+        #         elif self.request.GET['accepted_button'] == "False":
+        #             queryset = Response.objects.filter(advert=self.advert, accepted=False).order_by('-createTime')
+        #     except:
+        #         queryset = Response.objects.filter(advert=self.advert).order_by('-createTime')
+        # else:
+        #     queryset = Response.objects.filter(advert=self.advert).order_by('-createTime')
+
+
+
+
+
+        # self.filterset = ResponseFilter(self.request.GET, queryset)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filterset.qs'] = self.filterset.qs
-        context['filterset'] = self.filterset
-        context['search_result'] = len(self.filterset.qs)
+
+        # # filter buttons block
+        # accepted filter
+        context['accepted_'] = "True"
+        if self.request.GET:
+            try:
+                if self.request.GET['accepted_button'] == "True":
+                    context['search_result'] = len(Response.objects.filter(author=self.author, accepted=True))
+                elif self.request.GET['accepted_button'] == "False":
+                    context['search_result'] = len(Response.objects.filter(author=self.author, accepted=False))
+            except:
+                context['search_result'] = len(Response.objects.filter(author=self.author))
+        else:
+            context['search_result'] = len(Response.objects.filter(author=self.author))
+
+        context['GET'] = self.request.GET
+
+        # context['search_result'] = len(Response.objects.filter(author=self.author))
         context['user_'] = self.request.user.username
-        
-        
-        # get user responses list releted to the specific advert
+
+        # Filter -> to get user responses list only
+        context['user_responses'] = Response.objects.filter(author=self.request.user.id)
+               
+        # Filter -> to get user responses list releted to the specific advert - is not used!!!
         advert_filter = {}
         for message in Response.objects.filter(author=self.request.user.id):
             qs = Response.objects.filter(author=self.request.user.id, advert=message.advert.id).order_by('-createTime')#.values_list('text',flat=True)
@@ -215,21 +265,60 @@ class ResponseList(ListView):
         
         return context
 
-#FIXME: delete with a template
-class ResponseDetail(DetailView):
+# responses connected to the specific advert
+class ResponseList_ad(ListView):
     model = Response
-    template_name = 'BulletinBoard/response.html'
-    context_object_name = 'response'
-    # pk_url_kwarg = 'id'
+    ordering = '-createTime'
+    template_name = 'BulletinBoard/response_list_ad.html'
+    context_object_name = 'responses_ad'
+    paginate_by = 8
+
+    def get_queryset(self):
+        """ get filter: only self.user responses releted to advert"""
+        self.advert = get_object_or_404(Advert, id=self.kwargs['pk'])
+        self.author = get_object_or_404(User, id=self.request.user.id)
+        queryset = Response.objects.filter(advert=self.advert, author=self.author).order_by('-createTime')
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['user_'] = self.request.user.username
+        context['advert_'] = Advert.objects.get(id=self.kwargs['pk'])
 
-        context['user_id_'] = self.request.user.id
-        context['user_responses'] = Response.objects.filter(author=context['user_id_'])
+        # to get info in console
+        pprint(context)
+        print(f"**kwargs:{self.kwargs}")
+        return context
+
+
+class ResponseCreate(CreateView):
+    form_class = ResponseForm
+    model = Response
+    template_name = 'BulletinBoard/response_create.html'
+    success_url = reverse_lazy('response_list')
+
+    def form_valid(self, form):
+        text = form.save(commit=False)
+        text.text = self.request.POST['text']
+
+        advert = form.save(commit=False)
+        advert.advert = Advert.objects.get(id=self.kwargs['pk'])
+        
+        # get user. if None -> 404
+        author = form.save(commit=False)
+        if self.request.user.username:
+            author.author = User.objects.get(username=self.request.user.username)
+        else:
+            return HttpResponseRedirect('../../../404/')  
+
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advert_title'] = Advert.objects.get(id=self.kwargs['pk'])
 
         pprint(context)
-        print(f"self.object.id:{self.object.id}")
+        # print(f"**kwargs:{self.kwargs['pk']}")
 
         return context
 

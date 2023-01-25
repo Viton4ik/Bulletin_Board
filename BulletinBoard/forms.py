@@ -1,7 +1,7 @@
 
 from django import forms
 
-from .models import Advert#, Response
+from .models import Advert, Response
 
 
 class AdvertForm(forms.ModelForm):
@@ -19,15 +19,15 @@ class AdvertForm(forms.ModelForm):
             'upload': forms.ClearableFileInput(attrs={'multiple': True}),
         }
 
-# class ResponseForm(forms.ModelForm):
-#     # accepted = forms.FileField(widget=forms.CheckboxSelectMultiple()) 
-#     class Meta:
+class ResponseForm(forms.ModelForm):
+    # accepted = forms.FileField(widget=forms.CheckboxSelectMultiple()) 
+    class Meta:
 
-#         model = Response
-#         fields = [
-#                   'accepted',
-#               ]
-#         widgets = {
-#             'accepted': forms.CheckboxSelectMultiple(),
-#         }
+        model = Response
+        fields = [
+                  'text',
+                #   'advert',
+                # 'accepted',
+              ]
+
 

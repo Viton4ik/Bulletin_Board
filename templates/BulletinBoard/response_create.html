@@ -1,0 +1,28 @@
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block background %}
+    {% static 'assets/img/create-post.jpg' %}
+{% endblock background %}
+
+{% block MMORPG %}
+    Create your response here!
+    <hr>
+    <em>Advert:</em>
+    <a style="color: rgb(122, 197, 226);" href="{% url 'advert_detail' advert_title.id %}">
+    "{{ advert_title.title}}"</a>
+{% endblock MMORPG %}
+
+{% block preview %}
+   <form action="" method="post"> 
+    {% csrf_token %}
+
+        <p>Response:</p>
+        <p>{{ form.text }}</p>
+        <!-- <p>{{ form.advert }}</p> -->
+
+        <input type="submit" value="create" /> 
+   </form>
+{% endblock preview %}
+

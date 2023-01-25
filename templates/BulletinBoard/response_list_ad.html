@@ -13,47 +13,10 @@
     {% static 'assets/img/response.webp' %}
 {% endblock background %}
 
-<!-- responses list for the specific user -->
 {% block preview %}
-{% if responses %}
+{% if responses_ad %}
 
-        {% for response in responses %}
-            <div class="post-preview">
-                <a>
-                    <h3 class="post-subtitle"><em>Response: </em> {{ response.text }}</h3>
-                    <a href="{% url 'response_list_ad' response.advert.id %}">
-                    <h6 class="post-subtitle"><em>Advert:</em> "{{ response.advert.title }}" (author: '{{ response.advert.author }}')</h6></a>
-                </a>
-                    {% if response.accepted %}
-                        <em>Accepted</em> <Image id="" upload src="{% static 'assets/img/accepted.png' %}" width="2%" height="2%"/></p>
-                    {% else %}
-                    <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="2%" height="2%"/></p>
-                    {% endif %}
-                    <!-- delete button  -->
-                    <a href="{% url 'response_delete' response.advert.id %}">
-                    <input type="submit" value="Delete" /></a></p>
-
-                <p class="post-meta">
-                    <a href="#!">User "{{ response.author }}"</a>
-                    responsed on {{ response.createTime }}
-                </p>
-            </div>
-            <!-- Divider -->
-            <hr class="my-4" />
-        {% endfor %}
-
-{% else %}
-    <h2 class="post-title">Responses not found</h2>
-{% endif %}
-
-{% endblock preview %}
-
-<!-- work edition - the whole list - is not used!-->
-{% block preview1 %}
-{% if responses %}<!--delete this-->
-{#% if user_responses %#}
-{% for response in responses %}<!--delete this-->
-{#% for response in user_responses %#}
+{% for response in responses_ad %}
     <div class="post-preview">
         <a>
             <h3 class="post-subtitle"><em>Response: </em> {{ response.text }}</h3>
@@ -65,6 +28,11 @@
             {% else %}
             <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="2%" height="2%"/></p>
             {% endif %}
+            
+            <!-- delete button  -->
+            <a href="{% url 'response_delete' response.advert.id %}">
+            <input type="submit" value="Delete" /></a></p>
+
         <p class="post-meta">
             <a href="#!">User "{{ response.author }}"</a>
             responsed on {{ response.createTime }}
@@ -76,9 +44,9 @@
 {% else %}
 <h2 class="post-title">Responses not found</h2>
 {% endif %}
-{% endblock preview1 %}
+{% endblock preview %}
 
-<!-- is not used ! -->
+<!-- is not used -->
 {% block filter %}
 {% if advert_filter %}
 <!-- {{ advert_filter }} -->
@@ -111,60 +79,11 @@
 {% endif %}
 {% endblock filter %}
 
+
 {% block search %}
-<!-- Divider -->
-<hr class="my-4" />
-<!-- <form action="" method="get"> -->
-    <form action="" method="get">
-        <!-- {% csrf_token %} -->
-    
-        <h4>Filters</h4>
-        <!-- <hr> -->
-        <p>Accepted: 
-            <input type="submit" value="True" name="accepted_button"/>
-            <input type="submit" value="False" name="accepted_button"/></p>
-        <hr>
-        <!-- <input type="submit" value="Accepted" name="accepted_button"/> -->
-
-    <!-- {{ advert_filter }} -->
-
-    <!-- <fieldset>Accepted:
-        <label>
-        <input type="checkbox" name="accepted_button" value="1" checked> All
-        <input type="checkbox" name="accepted_button" value="True" name="True"> Accepted
-        <input type="checkbox" name="zzz" value="False" name="False"> Not accepted
-        <label>
-        </fieldset> -->
-
-        <!-- <select> -->
-            
-            <!-- <option>Any</option>
-            {% for bool in accepted_ %}
-            <option id="" name="zzz" value="{{ bool }}" >{{ bool }}</option>
-            {% endfor %}
-          </select></label> -->
-          <!-- <input type="submit" value="Search" name="zzz"/> -->
-          
-        <!-- Accepted:  -->
-        <!-- <input name="zzz" id="" type="checkbox"> -->
-
-        <!-- <input value="{{ zzz }}" type="{{ zzz }}" name="zzz"> -->
-
-        <!-- <option value="{{ filter_ }}">{{ filter_ }}</option> -->
-
-    <!-- <form> -->
-        <!-- <label for="filter">filter:</label> -->
-        <!-- <input id="" type="text" name="{{ zzz }}"> -->
-        <!-- <input id="filter" type="button" name="filter"> -->
-        <!-- <input type="submit" value="Отправить"> -->
-    <!-- </form> -->
- 
-</form>
-<form action="" method="get">
-    {# Button with an empty get-method to clean all filters #}
-    <input type="submit" value="Clean filters" />
-</form>
-<caption><em>found: {{ search_result }}</em></caption>
+    <hr>
+    <h3 class="site-heading"> Responses for advert: </h3>
+    <h2 class="site-heading"><em>"{{ advert_.title }}"</em></h2>
 {% endblock search %}
 
 {% block pagination %}
