@@ -34,18 +34,20 @@
 
                         {% if user.is_anonymous %} 
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" ><em>User: "Unregistered"</em></a></li> &nbsp;
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'signup' %}">SignIn</a></li> &nbsp;
                         {% else %}
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" ><em>User: "{{ request.user.username }}"</em></a></li> &nbsp;
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'logout' %}">logOut</a></li> &nbsp;
                         {% endif %}
+                            
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'advert_search' %}">Search</a></li>
                         {% if not user.is_anonymous %} 
                             {% if request.user.is_authenticated %}
                                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'advert_create' %}">Create advert</a></li>
-                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'response_list' %}">Responses</a></li>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'response_list' %}">Sent Responses</a></li>
+                                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'response_list_in' %}">Received Responses</a></li>
                             {% endif %}
                         {% endif %}
-                        
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 {% endblock 404_1 %}

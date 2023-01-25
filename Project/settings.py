@@ -45,11 +45,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # site in admin panel
+    'django.contrib.sites',
+
+    # flatpages
+    'django.contrib.flatpages', 
 
     # added apps
     'BulletinBoard',
     'django_filters',
+    'accounts',
+
+     # 3 compulsory apps for `allauth`
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # compulsory app for yandex auth
+    'allauth.socialaccount.providers.yandex',  # list of providers - https://django-allauth.readthedocs.io/en/latest/installation.html
+
 ]
+
+SITE_ID = 1 # allauth, flatpages
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,6 +91,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # connect `allauth`
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -142,3 +162,27 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# the first page after Authentication
+LOGIN_REDIRECT_URL = "/adverts"
+
+# connect `allauth`
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# AUTHENTICATION OPTIONS
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True # activate the username filed
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_VRIFICATION = 'mandatory' #ACCOUNT_EMAIL_VERIFICATION = 'none'
+# ACCOUNT_CONFIRM_EMAIL_ON_GET = True #позволит избежать дополнительных действий и активирует аккаунт сразу, как только мы перейдем по ссылке
+ACCOUNT_EMAIL_SUBJECT_PREFIX ='' # delete 'example.com' in e-mail subject
+
+# # the first page after Authentication
+# LOGIN_REDIRECT_URL = "/news"
+# # the first page after log out
+# # LOGOUT_REDIRECT_URL = "/news"
+# ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login"

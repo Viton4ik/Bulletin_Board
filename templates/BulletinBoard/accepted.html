@@ -1,0 +1,17 @@
+
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block background %}
+    {% static 'assets/img/accepted.png' %}
+{% endblock background %}
+
+{% block delete %}
+<form action="" method="post"> 
+    {% csrf_token %}
+    Accept response {{ form.accepted }}
+    <p><input type="submit" value="Agree" /></p>
+</form>
+<p></p>
+{% endblock delete %}

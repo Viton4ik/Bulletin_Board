@@ -92,14 +92,16 @@
     {{ filterset.form.non_field_errors }}
     {{ filterset.form.name__icontains.errors }}
     <tr>
+        <td>Author:</td>
         <td>Title:</td>
-        <td>Category:</td>
         <td>Created:</td>
+        <td>Category:</td>
     </tr>
     <tr>
+        <td>{{ filterset.form.author }}</td>
         <td>{{ filterset.form.title }}</td>
-        <td>{{ filterset.form.category }}</td>
         <td>{{ filterset.form.createTime }}</td>
+        <td>{{ filterset.form.category }}</td>
         <td><input type="submit" value="Search" /></td>
     </tr> 
 </table>

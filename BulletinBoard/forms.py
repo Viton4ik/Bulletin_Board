@@ -31,3 +31,13 @@ class ResponseForm(forms.ModelForm):
               ]
 
 
+class ResponseFormAccept(forms.ModelForm):
+    # accepted = forms.FileField(widget=forms.CheckboxSelectMultiple()) 
+    class Meta:
+
+        model = Response
+        fields = [
+                #   'text',
+                #   'advert',
+                'accepted',
+              ]

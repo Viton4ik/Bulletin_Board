@@ -6,7 +6,7 @@
 {% load custom_tags %}
 
 {% block MMORPG %}
-    List of responses have been sent by <span style="text-decoration: underline; color: rgb(61, 118, 172);" >"{{ user_ }}"" </span>
+    List of responses have been received by <span style="text-decoration: underline; color: rgb(61, 118, 172);" >"{{ user_ }}"" </span>
 {% endblock MMORPG %}
 
 {% block background %}
@@ -15,13 +15,13 @@
 
 <!-- responses list for the specific user -->
 {% block preview %}
-{% if responses %}
+{% if responses_in %}
 
-        {% for response in responses %}
+        {% for response in responses_in %}
             <div class="post-preview">
                 <a>
                     <h3 class="post-subtitle"><em>Response: </em> {{ response.text }}</h3>
-                    <a href="{% url 'response_list_ad' response.advert.id %}">
+                    <a href="{% url 'response_list_ad_in' response.advert.id %}">
                     <h6 class="post-subtitle"><em>Advert:</em> "{{ response.advert.title }}" (author: '{{ response.advert.author }}')</h6></a>
                 </a>
                     {% if response.accepted %}
@@ -29,9 +29,17 @@
                     {% else %}
                     <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="2%" height="2%"/></p>
                     {% endif %}
+
                     <!-- delete button  -->
                     <a href="{% url 'response_delete' response.id %}">
-                    <input type="submit" value="Delete" /></a></p>
+                    <input type="submit" value="Delete" /></a>
+
+                    <!-- Accept button  -->
+                    {% if not response.accepted %}
+                    <a href="{% url 'accepted' response.id %}">
+                        <!-- <input type="submit" value="Accept" name="{{ accepted_true }}"/> -->
+                        <input type="submit" value="Accept" /></a></p>
+                    {% endif %}
 
                 <p class="post-meta">
                     <a href="#!">User "{{ response.author }}"</a>
@@ -45,12 +53,80 @@
 {% else %}
     <h2 class="post-title">Responses not found</h2>
 {% endif %}
-
 {% endblock preview %}
 
 
+
+
+<!-- work edition - the whole list - is not used!-->
+{% block preview1 %}
+{% if responses %}<!--delete this-->
+{#% if user_responses %#}
+{% for response in responses %}<!--delete this-->
+{#% for response in user_responses %#}
+    <div class="post-preview">
+        <a>
+            <h3 class="post-subtitle"><em>Response: </em> {{ response.text }}</h3>
+            <a href="{% url 'advert_detail' response.advert.id %}">
+            <h6 class="post-subtitle"><em>Advert:</em> {{ response.advert.title }}</h6></a>
+        </a>
+            {% if response.accepted %}
+                <em>Accepted</em> <Image id="" upload src="{% static 'assets/img/accepted.png' %}" width="2%" height="2%"/></p>
+            {% else %}
+            <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="2%" height="2%"/></p>
+            {% endif %}
+        <p class="post-meta">
+            <a href="#!">User "{{ response.author }}"</a>
+            responsed on {{ response.createTime }}
+        </p>
+    </div>
+    <!-- Divider -->
+    <hr class="my-4" />
+{% endfor %}
+{% else %}
+<h2 class="post-title">Responses not found</h2>
+{% endif %}
+{% endblock preview1 %}
+
+
+
+<!-- is not used ! -->
+{% block filter %}
+{% if advert_filter %}
+<!-- {{ advert_filter }} -->
+<p></p>
+{% for advert_keys, advert_values in advert_filter.items %}
+    <div class="post-preview">
+        <a href="{% url 'advert_detail' advert_keys.id %}">
+            <h3 class="post-subtitle"><em>Advert: </em>"{{ advert_keys.title }}"
+            <h6><em>(posted by: {{ advert_keys.author }}")</em></h6></a>
+            <h5><em>Responses:</em> </h5>
+            <p></p>
+            {% for value in advert_values %}
+                <h6 class="post-meta"> - {{ value.text.title }}</h6>
+                <h15 class="post-meta">Created: {{ value.createTime }}</h15>
+                {% if value.accepted %}
+                    <em>Accepted</em> <Image id="" upload src="{% static 'assets/img/accepted.png' %}" width="2%" height="2%"/>
+                {% else %}
+                    <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="2%" height="2%"/>
+                {% endif %}
+                <a href="{% url 'response_delete' value.id %}">
+                <input type="submit" value="Delete" /></a></p>
+            {% endfor %}
+            <p></p>
+    </div>
+    <!-- Divider -->
+    <hr class="my-4" />
+{% endfor %}
+{% else %}
+    <h2 class="post-title">Responses not found</h2>
+{% endif %}
+{% endblock filter %}
+
+
+
+
 {% block search %}
-<!-- Divider -->
 <hr class="my-4" />
     <form action="" method="get">
         <h4>Filters</h4>
@@ -58,7 +134,7 @@
             <input type="submit" value="True" name="accepted_button"/>
             <input type="submit" value="False" name="accepted_button"/></p>
         <hr>
-</form>
+    </form>
 <form action="" method="get">
     {# Button with an empty get-method to clean all filters #}
     <input type="submit" value="Clean filters" />

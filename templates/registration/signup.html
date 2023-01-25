@@ -1,0 +1,35 @@
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block background %}
+    {% static 'assets/img/signup.jpg' %}
+{% endblock background %}
+
+{% block delete %}
+<form method="post">
+    {% csrf_token %}
+    <li class="nav-item"><a class="navbar-nav ms-auto py-4 py-lg-0" href="../../allauth/login">Allauth SignIn</a></li>
+    <li class="nav-item"><a class="navbar-nav ms-auto py-4 py-lg-0" href="../../accounts/login">Sipmle LogIn</a></li>
+    <!-- {{ form.as_p }} -->
+    <p>Username: <h6><em>(Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.)</em></h6></p>
+    <p>{{ form.username }}</p>
+    <p>Name: </p>
+    <p>{{ form.first_name }}</p>
+    <p>Last Name: </p>
+    <p>{{ form.last_name }}</p>
+    <p>Email:</p>
+    <p>{{ form.email }}</p>
+    <p>Password: </p>
+    <p>{{ form.password1 }}</p>
+    <p> <h6><em>- Your password can’t be too similar to your other personal information.</em></h6>
+        <h6><em>- Your password must contain at least 8 characters.</em></h6>
+        <h6><em>- Your password can’t be a commonly used password.<em></h6>
+        <h6><em>- Your password can’t be entirely numeric.<em></h6></p>
+
+    <p> Password confirmation:</p>
+    <p>{{ form.password2 }}</p>
+    <input type="submit" value="Sing up">
+</form>
+{% endblock delete %}
+
