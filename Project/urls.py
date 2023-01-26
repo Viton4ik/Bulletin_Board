@@ -27,7 +27,7 @@ urlpatterns = [
     # allauth
     path('accounts/', include('django.contrib.auth.urls')),
     path("accounts/", include("accounts.urls")),              # our application
-    path("allauth/", include("allauth.urls")),               # allauth
+    path("allauth/", include("allauth.urls")),                # allauth
     # add BulletinBoard urls patterns
     path('adverts/', include('BulletinBoard.urls')),
           

@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages', 
 
     # added apps
-    'BulletinBoard',
+    'BulletinBoard.apps.BulletinboardConfig', #instead of using 'BulletinBoard' -> to activate decorators for senders (setting.py)'
     'django_filters',
     'accounts',
 
@@ -166,6 +166,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # the first page after Authentication
 LOGIN_REDIRECT_URL = "/adverts"
 
+# the first page after log out
+LOGOUT_REDIRECT_URL = "/adverts"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/adverts"
+
 # connect `allauth`
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -180,9 +184,17 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_VRIFICATION = 'mandatory' #ACCOUNT_EMAIL_VERIFICATION = 'none'
 # ACCOUNT_CONFIRM_EMAIL_ON_GET = True #позволит избежать дополнительных действий и активирует аккаунт сразу, как только мы перейдем по ссылке
 ACCOUNT_EMAIL_SUBJECT_PREFIX ='' # delete 'example.com' in e-mail subject
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 
-# # the first page after Authentication
-# LOGIN_REDIRECT_URL = "/news"
-# # the first page after log out
-# # LOGOUT_REDIRECT_URL = "/news"
-# ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login"
+# email config
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv('HOST_EMAIL') # 'NewsPortalSite' (.env)
+EMAIL_HOST_PASSWORD = os.getenv('HOST_PASSWORD') # (.env)
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# use this for signals
+SITE_URL = "http://127.0.0.1:8000"

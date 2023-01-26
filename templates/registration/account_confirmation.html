@@ -1,0 +1,27 @@
+{% extends 'default.html' %}
+
+{% load static %}
+
+{% block background %}
+    {% static 'assets/img/confirm.webp' %}
+{% endblock background %}
+
+{% block preview %}
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+    {{ field.label_tag }}<br>
+    {{ field }}
+    </p>
+    {% endfor %}
+    <input type="submit" value="Confirm">    
+   
+</form>
+{% endblock preview %}
+
+{% block Bulletin_Board %}
+    <p style="color: red">{{ message }}</p>
+{% endblock Bulletin_Board %}
+

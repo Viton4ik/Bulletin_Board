@@ -22,15 +22,7 @@ class SignUpForm(UserCreationForm):
         )
 
 
-# customised form
-# from allauth.account.forms import SignupForm, UserForm, PasswordField, BaseSignupForm
-# from django.contrib.auth.models import Group
+class ConfirmationForm(forms.Form): 
+    token = forms.IntegerField()
+    user = forms.CharField()  
 
-
-# class CustomSignupForm(SignupForm):
-
-#     def save(self, request):
-#         user = super().save(request)
-#         common_users = Group.objects.get(name="common users")
-#         user.groups.add(common_users)
-#         return user

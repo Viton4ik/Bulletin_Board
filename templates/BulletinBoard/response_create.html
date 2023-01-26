@@ -17,11 +17,8 @@
 {% block preview %}
    <form action="" method="post"> 
     {% csrf_token %}
-
         <p>Response:</p>
         <p>{{ form.text }}</p>
-        <!-- <p>{{ form.advert }}</p> -->
-
         <input type="submit" value="create" /> 
    </form>
 {% endblock preview %}

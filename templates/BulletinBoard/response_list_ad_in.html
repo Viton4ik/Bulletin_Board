@@ -6,7 +6,7 @@
 {% load custom_tags %}
 
 {% block MMORPG %}
-    List of responses have been sent by <span style="text-decoration: underline; color: rgb(61, 118, 172);" >"{{ user_ }}"" </span>
+    List of responses have been sent by <span style="text-decoration: underline; color: rgb(61, 118, 172);" >"{{ user_ }}" </span>
 {% endblock MMORPG %}
 
 {% block background %}
@@ -32,9 +32,6 @@
             <!-- delete button  -->
             <a href="{% url 'response_delete' response.id %}">
             <input type="submit" value="Delete" /></a></p>
-
-
-
         <p class="post-meta">
             <a href="#!">User "{{ response.author }}"</a>
             responsed on {{ response.createTime }}
@@ -47,40 +44,6 @@
 <h2 class="post-title">Responses not found</h2>
 {% endif %}
 {% endblock preview %}
-
-<!-- is not used -->
-{% block filter %}
-{% if advert_filter %}
-<!-- {{ advert_filter }} -->
-<p></p>
-{% for advert_keys, advert_values in advert_filter.items %}
-    <div class="post-preview">
-        <a href="{% url 'advert_detail' advert_keys.id %}">
-            <h3 class="post-subtitle"><em>Advert: </em>"{{ advert_keys.title }}"
-            <h6><em>(posted by: {{ advert_keys.author }}")</em></h6></a>
-            <h5><em>Responses:</em> </h5>
-            <p></p>
-            {% for value in advert_values %}
-                <h6 class="post-meta"> - {{ value.text.title }}</h6>
-                <h15 class="post-meta">Created: {{ value.createTime }}</h15>
-                {% if value.accepted %}
-                    <em>Accepted</em> <Image id="" upload src="{% static 'assets/img/accepted.png' %}" width="2%" height="2%"/>
-                {% else %}
-                    <em>Not accepted</em> <Image id="" upload src="{% static 'assets/img/decline.png' %}" width="2%" height="2%"/>
-                {% endif %}
-                <a href="{% url 'response_delete' value.id %}">
-                <input type="submit" value="Delete" /></a></p>
-            {% endfor %}
-            <p></p>
-    </div>
-    <!-- Divider -->
-    <hr class="my-4" />
-{% endfor %}
-{% else %}
-    <h2 class="post-title">Responses not found</h2>
-{% endif %}
-{% endblock filter %}
-
 
 {% block search %}
     <hr>
@@ -123,4 +86,3 @@
     {% endif %}
 </div>
 {% endblock pagination %}
-

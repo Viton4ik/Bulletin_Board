@@ -1,3 +1,4 @@
+<!-- template is not used. url is deactivated-->
 {% extends 'default.html' %}
 
 {% load static %}
@@ -8,7 +9,8 @@
 
 {% block delete %}
 <form method="post">
-    {% csrf_token %}
+    {% csrf_token %} 
+    <h6><em>SignUp here or use:</em></h6>
     <li class="nav-item"><a class="navbar-nav ms-auto py-4 py-lg-0" href="../../allauth/login">Allauth SignIn</a></li>
     <li class="nav-item"><a class="navbar-nav ms-auto py-4 py-lg-0" href="../../accounts/login">Sipmle LogIn</a></li>
     <!-- {{ form.as_p }} -->

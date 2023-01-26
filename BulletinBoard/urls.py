@@ -3,7 +3,7 @@ from django.urls import path
 
 from .views import AdvertList, AdvertDetail, AdvertSearch, AdvertCreate, html_404, AdvertUpdate, \
    AdvertDelete, ResponseList, ResponseDelete, ResponseCreate, ResponseList_ad, ResponseList_in, ResponseList_ad_in, \
-      ResponseUpdate #
+      ResponseUpdate 
 
 
 urlpatterns = [
@@ -19,12 +19,7 @@ urlpatterns = [
    path('<int:pk>/responses_in', ResponseList_ad_in.as_view(), name='response_list_ad_in'), 
    path('responses/<int:pk>/delete/', ResponseDelete.as_view(), name='response_delete'),
    path('<int:pk>/responses/create/', ResponseCreate.as_view(), name='response_create'),
-
    path('responses/<int:pk>/accepted', ResponseUpdate.as_view(), name='accepted'),
-
-   # path('create/', advert_create, name='advert_create'),
    path('404/', html_404, name='404'),
-   # path('responses/<int:pk>/accepted', accept_response, name='accepted'),
-
    
 ]

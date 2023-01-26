@@ -34,7 +34,7 @@
 
                         {% if user.is_anonymous %} 
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" ><em>User: "Unregistered"</em></a></li> &nbsp;
-                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'signup' %}">SignIn</a></li> &nbsp;
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'login' %}">LogIn</a></li> &nbsp;
                         {% else %}
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" ><em>User: "{{ request.user.username }}"</em></a></li> &nbsp;
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'logout' %}">logOut</a></li> &nbsp;

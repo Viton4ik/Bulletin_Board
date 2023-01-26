@@ -1,22 +1,27 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
-# from django.core.files.storage import FileSystemStorage
 
-from .filters import AdvertFilter#, ResponseFilter
+from django.urls import reverse_lazy
+
+from django.http import HttpResponseRedirect
+
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+
+from django.conf import settings
+
+from django.core.mail import send_mail
+
+from .filters import AdvertFilter
 
 from .forms import AdvertForm, ResponseForm, ResponseFormAccept
 
 from .models import Advert, Response
 
-from django.urls import reverse_lazy
-
 from datetime import datetime
 
-
-#FIXME: to be deleted later
 from pprint import pprint
 
 # ===== service views =====
@@ -29,10 +34,6 @@ def html_404(request):
         'form' : form,
         'anonymous': anonymous,
         })
-
-# def html_403(request):
-#     form = AdvertForm()
-#     return render(request, '403.html', {'form' : form})
 
 # ===== service views =====
 
@@ -59,7 +60,6 @@ class AdvertList(ListView):
 
         # to get info in console
         pprint(context)
-        
         return context
 
 
@@ -83,11 +83,7 @@ class AdvertDetail(DetailView):
         # if user_is_author
         context['user_is_author'] = context['user_'] == context['advert_author']
         
-        # #TODO
-        # context['response_id'] = Response.objects.filter(author=self.request.user.id).values_list('id', flat=True)
-
         pprint(context)
-        print(f"**kwargs:{self.kwargs}")
         return context
 
 
@@ -110,7 +106,10 @@ class AdvertSearch(ListView):
         return context
 
 
-class AdvertCreate(CreateView):
+class AdvertCreate(LoginRequiredMixin, CreateView):
+    # 403.html
+    raise_exception = True
+
     form_class = AdvertForm
     model = Advert
     template_name = 'BulletinBoard/advert_edit.html'
@@ -142,10 +141,13 @@ class AdvertCreate(CreateView):
         return context
  
 
-class AdvertUpdate(UpdateView): 
+class AdvertUpdate(LoginRequiredMixin, UpdateView): 
     """
     'get_absolute_url' function in models is used -> 'get_success_url' is not used here
     """
+    # 403.html
+    raise_exception = True
+
     form_class = AdvertForm
     model = Advert
     template_name = 'BulletinBoard/advert_edit.html'
@@ -170,7 +172,10 @@ class AdvertUpdate(UpdateView):
         return context
 
 
-class AdvertDelete(DeleteView): 
+class AdvertDelete(LoginRequiredMixin, DeleteView): 
+    # 403.html
+    raise_exception = True
+
     model = Advert
     template_name = 'BulletinBoard/advert_delete.html'
     success_url = reverse_lazy('advert_list')
@@ -181,7 +186,10 @@ class AdvertDelete(DeleteView):
 # ===== Response views =====
 
 # responses list view received by user
-class ResponseList_in(ListView):
+class ResponseList_in(LoginRequiredMixin, ListView):
+    # 403.html
+    raise_exception = True
+
     model = Response
     ordering = '-createTime'
     template_name = 'BulletinBoard/response_list_in.html'
@@ -224,22 +232,16 @@ class ResponseList_in(ListView):
         # Filter -> to get user responses list only
         context['user_responses'] = Response.objects.filter(author=self.request.user.id)
                
-        # # Filter -> to get user responses list releted to the specific advert - is not used!!!
-        # advert_filter = {}
-        # for message in Response.objects.filter(author=self.request.user.id):
-        #     qs = Response.objects.filter(author=self.request.user.id, advert=message.advert.id).order_by('-createTime')#.values_list('text',flat=True)
-        #     advert_filter[message.advert] = qs
-        # context['advert_filter'] = advert_filter
-
         # to get info in console
         pprint(context)
-        
         return context
         
 
 # responses list view sent by user
-class ResponseList(ListView):
-    # form_class = ResponseForm
+class ResponseList(LoginRequiredMixin, ListView):
+    # 403.html
+    raise_exception = True
+
     model = Response
     ordering = '-createTime'
     template_name = 'BulletinBoard/response_list.html'
@@ -284,12 +286,14 @@ class ResponseList(ListView):
                
         # to get info in console
         pprint(context)
-        
         return context
 
 
 # sent responses connected to the specific advert
-class ResponseList_ad(ListView):
+class ResponseList_ad(LoginRequiredMixin, ListView):
+    # 403.html
+    raise_exception = True
+
     model = Response
     ordering = '-createTime'
     template_name = 'BulletinBoard/response_list_ad.html'
@@ -315,7 +319,10 @@ class ResponseList_ad(ListView):
 
 
 # received responses connected to the specific advert
-class ResponseList_ad_in(ListView):
+class ResponseList_ad_in(LoginRequiredMixin, ListView):
+    # 403.html
+    raise_exception = True
+
     model = Response
     ordering = '-createTime'
     template_name = 'BulletinBoard/response_list_ad_in.html'
@@ -340,7 +347,10 @@ class ResponseList_ad_in(ListView):
         return context
 
 
-class ResponseCreate(CreateView):
+class ResponseCreate(LoginRequiredMixin, CreateView):
+    # 403.html
+    raise_exception = True
+
     form_class = ResponseForm
     model = Response
     template_name = 'BulletinBoard/response_create.html'
@@ -367,54 +377,44 @@ class ResponseCreate(CreateView):
         context['advert_title'] = Advert.objects.get(id=self.kwargs['pk'])
 
         pprint(context)
-        # print(f"**kwargs:{self.kwargs['pk']}")
-
+        print(f"**kwargs:{self.kwargs['pk']}")
         return context
 
 
-class ResponseDelete(DeleteView): 
+class ResponseDelete(LoginRequiredMixin, DeleteView): 
+    # 403.html
+    raise_exception = True
+
     model = Response
     template_name = 'BulletinBoard/response_delete.html'
     success_url = reverse_lazy('response_list')
 
 
-class ResponseUpdate(UpdateView): #class PostUpdate(LoginRequiredMixin, UpdateView):
+# Accepted view
+class ResponseUpdate(LoginRequiredMixin, UpdateView): 
+    # 403.html
+    raise_exception = True
+
     form_class = ResponseFormAccept
     model = Response
     template_name = 'BulletinBoard/accepted.html'
     success_url = reverse_lazy('response_list_in')
 
+    def form_valid(self, form):
+        """ send a email if response is accepted"""
+        if User.objects.filter(id=self.request.user.id):
+            user_ = User.objects.get(id=self.request.user.id)
+            user_response_ = Response.objects.get(id=self.kwargs['pk']).author
+            advert_ = Response.objects.get(id=self.kwargs['pk']).advert
+            response_ = Response.objects.get(id=self.kwargs['pk'])
+            send_mail(
+                subject=f'Acception message!' ,
+                message=f'MMORPG portal greetings you! \nResponse "{response_.text}" for advert "{advert_.title}" has been accepted by "{user_.username}"!',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user_response_.email, user_.email]
+            )
+        else:
+            return HttpResponseRedirect('404')  
+        return super().form_valid(form)
 
 # ===== Response views =====
-
-
-
-
-
-
-
-
-# def advert_create(request):
-#     if request.method == 'POST':
-#         form = AdvertForm(request.POST, request.FILES)
-#         author = form.save(commit=False)
-#         author.author = User.objects.get(username=request.user.username)
-#         if form.is_valid():
-
-#             form.save()
-#             return HttpResponseRedirect('../') 
-#     else:
-#         form = AdvertForm
-
-#     return render(request, 'BulletinBoard/advert_edit.html', {'form':form})
-
-# def create_post(request):
-#     if request.method == 'POST':
-#         form = AdvertForm(request.POST, request.FILES)
-#         files = request.FILES.getlist('file') #field name in model
-#         if form.is_valid():# and file_form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect("/") 
-#     else:
-#         form = AdvertForm
-#     return render(request, 'BulletinBoard/advert_edit.html', {'form':form})
