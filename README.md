@@ -20,7 +20,7 @@
 <img src="https://img.shields.io/badge/8-In addition, the user can define the ad in one of the following categories: -blue"/>
 <img src="https://img.shields.io/badge/categories: - Tanks, Heals, DDs, Merchants, Guildmasters, Questgivers, Blacksmiths, Leatherworkers, Potions Masters, Spellmasters - blue"/>
 
-<p><img src="https://img.shields.io/badge/🌱Examples:-orange"/></p>
+<p><img src="https://img.shields.io/badge/🌱Some examples:-orange"/></p>
 
 <img src="https://img.shields.io/static/v1?label=1&message=Advert list&color=9cf"/>
 <h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/adverts.png"/> 
