@@ -16,8 +16,8 @@
 <img src="https://img.shields.io/badge/4-When sending a response, the user receives an email with a notification about it -blue"/>
 <img src="https://img.shields.io/badge/5-Also, the user has access to a private page with responses to his ads, inside which he can filter responses by ads, delete and accept them -blue"/>
 <img src="https://img.shields.io/badge/6-If accepting a response, the user who left the response also receives a notification -blue"/>
-<img src="https://img.shields.io/badge/7-In addition, the user can define the ad in one of the following categories: 
-Tanks, Heals, DDs, Merchants, Guildmasters, Questgivers, Blacksmiths, Leatherworkers, Potions Masters, Spellmasters -blue"/>
-<img src="https://img.shields.io/badge/8-There is an email notice to the users if a new advert has been added -blue"/>
+<img src="https://img.shields.io/badge/7-There is an email notice to the users if a new advert has been added -blue"/>
+<img src="https://img.shields.io/badge/8-In addition, the user can define the ad in one of the following categories: -blue"/>
+<img src="https://img.shields.io/badge/categories: - Tanks, Heals, DDs, Merchants, Guildmasters, Questgivers, Blacksmiths, Leatherworkers, Potions Masters, Spellmasters - blue"/>
 
 <p><img src="https://img.shields.io/badge/🌱Examples:-orange"/></p>
