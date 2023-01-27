@@ -22,5 +22,5 @@
 
 <p><img src="https://img.shields.io/badge/🌱Examples:-orange"/></p>
 
-<h3 align="center"><img src="[https://img.shields.io/badge/bulletin board- project -green](https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/adverts.png)"/> 
+<h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/adverts.png"/> 
 <a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"></h3> 
