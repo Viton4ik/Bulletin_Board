@@ -25,3 +25,23 @@
 <img src="https://img.shields.io/static/v1?label=1&message=Advert list&color=9cf"/>
 <h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/adverts.png"/> 
 <a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"></h3> 
+  
+ <img src="https://img.shields.io/static/v1?label=2&message=Advert Create&color=9cf"/>
+<h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/create.png"/> 
+<a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"></h3> 
+  
+ <img src="https://img.shields.io/static/v1?label=3&message=Search page&color=9cf"/>
+<h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/search.png"/> 
+<a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"></h3> 
+  
+ <img src="https://img.shields.io/static/v1?label=4&message=Responses&color=9cf"/>
+<h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/responses.png"/> 
+<a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"></h3> 
+  
+  <img src="https://img.shields.io/static/v1?label=5&message=LogIn&color=9cf"/>
+<h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/login.png"/> 
+<a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"></h3> 
+    
+  <img src="https://img.shields.io/static/v1?label=6&message=allauth&color=9cf"/>
+<h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/allauth.png"/> 
+<a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"></h3> 
