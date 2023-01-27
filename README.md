@@ -22,6 +22,6 @@
 
 <p><img src="https://img.shields.io/badge/🌱Examples:-orange"/></p>
 
-<img src="https://img.shields.io/badge/Advert list - light blue"/>
+<img src="https://img.shields.io/badge/1 - Advert list - 9cf"/>
 <h3 align="center"><img src="https://github.com/Viton4ik/Bulletin_Board/blob/master/prj_screens/adverts.png"/> 
 <a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"></h3> 
