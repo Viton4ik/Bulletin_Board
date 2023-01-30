@@ -18,7 +18,7 @@
 <img src="https://img.shields.io/badge/6-If accepting a response, the user who left the response also receives a notification -blue"/>
 <img src="https://img.shields.io/badge/7-There is an email notice to the users if a new advert has been added -blue"/>
 <img src="https://img.shields.io/badge/8-In addition, the user can define the ad in one of the categories: -blue"/>
-<img src="https://img.shields.io/badge/categories: there is a possibility to create them - blue"/>
+<img src="https://img.shields.io/badge/categories:- there is a possibility to create them - blue"/>
 
 <p><img src="https://img.shields.io/badge/🌱Some examples:-orange"/></p>
 
