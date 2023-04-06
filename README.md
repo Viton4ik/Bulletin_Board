@@ -5,7 +5,7 @@
 <a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/django.svg" alt="django" width="40" height="20"/></h3> 
 
 <h3 align="center">
-<a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> </p></a><em>A fan internet resource - something like a 
+<a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> </p></a><em>Fans internet resource - something like a 
 "bulletin board"</em></h3>
 
 <p><img src="https://img.shields.io/badge/📝The main functionality of the site:-orange"/></p>
